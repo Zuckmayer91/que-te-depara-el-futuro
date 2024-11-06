@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividades Sorpresa</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #5b3a92;
+            text-align: center;
+        }
+
+        .instructions, .suspense-note {
+            color: #555;
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .activity-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .activity {
+            font-size: 18px;
+            padding: 10px;
+            width: 250px;
+            background-color: #e0e4ff;
+            border: 1px solid #5b3a92;
+            border-radius: 5px;
+            text-align: left;
+            transition: background-color 0.3s;
+        }
+
+        .activity.highlighted {
+            background-color: #d1c4ff;
+            font-weight: bold;
+        }
+
+        .arrow {
+            position: absolute;
+            left: -30px;
+            font-size: 24px;
+            color: #ff6347;
+            transition: top 0.3s ease;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #5b3a92;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #5b3a92;
+            text-align: center;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Título de la experiencia -->
+    <h1>¿Leidy, estás lista para descubrir una experiencia única juntos? 🎁✨</h1>
+
+    <!-- Instrucciones guiadas para darle más emoción -->
+    <div class="instructions">
+        Toca para girar la flecha y ver qué experiencia he preparado para nosotros. ¿Cuál crees que será? 🎈
+    </div>
+
+    <!-- Nota de suspense -->
+    <div class="suspense-note">
+        Hay algo único en cada actividad, pero solo una será para ti hoy. ¡Descúbrela!
+    </div>
+
+    <!-- Lista de actividades con la flecha -->
+    <div class="activity-container" id="activityContainer">
+        <div class="activity">Clase de cocina juntos</div>
+        <div class="activity">Clase de tenis juntos</div>
+        <div class="activity">Música en vivo</div>
+        <div class="activity">Cena sorpresa</div>
+        <div class="activity">Sesión de fotos artísticas</div>
+        <div class="activity">Tour de cafés o postres</div>
+        <div class="activity">Taller de arte juntos</div>
+        <div class="activity">Tarde de té o cata de chocolates</div>
+    </div>
+    
+    <div class="arrow" id="arrow">➡️</div>
+
+    <!-- Botón para iniciar la animación -->
+    <div class="button-container">
+        <button onclick="startSelection()">¡Muéstrame la sorpresa!</button>
+    </div>
+
+    <!-- Mensaje de resultado -->
+    <div class="message" id="message"></div>
+
+    <script>
+        const activities = [
+            { name: "Clase de cocina juntos", description: "¡Disfruta de una clase práctica en la que aprenderán a cocinar algo delicioso!" },
+            { name: "Clase de tenis juntos", description: "Pasen tiempo al aire libre aprendiendo técnicas de tenis." },
+            { name: "Música en vivo", description: "Una velada única con música en vivo en un ambiente acogedor." },
+            { name: "Cena sorpresa", description: "Cena en un lugar sorpresa, ideal para crear recuerdos juntos." },
+            { name: "Sesión de fotos artísticas", description: "Capturen momentos especiales con una sesión de fotos profesional." },
+            { name: "Tour de cafés o postres", description: "Exploren juntos una ruta de cafés y postres deliciosos." },
+            { name: "Taller de arte juntos", description: "Relájense y exploren su creatividad en un taller de arte." },
+            { name: "Tarde de té o cata de chocolates", description: "Disfruten una cata de chocolates o una tarde de té." }
+        ];
+
+        let arrow = document.getElementById("arrow");
+        let message = document.getElementById("message");
+        let activityContainer = document.getElementById("activityContainer");
+        let currentIndex = 0;
+        let interval;
+
+        function startSelection() {
+            message.innerHTML = ""; // Limpiar mensaje previo
+
+            if (interval) {
+                clearInterval(interval);
+            }
+
+            interval = setInterval(() => {
+                // Desmarcar el anterior y mover la flecha a la siguiente posición
+                activityContainer.children[currentIndex].classList.remove("highlighted");
+
+                currentIndex = (currentIndex + 1) % activities.length;
+                arrow.style.top = `${currentIndex * 42}px`;
+                activityContainer.children[currentIndex].classList.add("highlighted");
+            }, 150);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                const selectedActivity = activities[currentIndex];
+                message.innerHTML = `¡Felicidades, bebé! Te has ganado: <strong>${selectedActivity.name}</strong><br>${selectedActivity.description}`;
+            }, 4000); // Duración de la animación
+        }
+    </script>
+</body>
+</html>
+
